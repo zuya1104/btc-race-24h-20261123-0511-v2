@@ -61,7 +61,9 @@ function minLow(from: number, to: number): number {
 runBars({
   onBatch(state, batch) {
     // Record every bar in the batch; the decision uses the last bar only.
-    for (const bar of batch) {
+    // The batch argument is a Batch object ({seq, t, bars, fills, account}),
+    // so the bars live on batch.bars, not on the batch itself.
+    for (const bar of batch.bars) {
       closes.push(Number(bar.c));
       highs.push(Number(bar.h));
       lows.push(Number(bar.l));
